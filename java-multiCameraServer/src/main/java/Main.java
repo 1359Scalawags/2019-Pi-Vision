@@ -90,7 +90,7 @@ import team1359.Network;
 public final class Main {
 	private static String configFile = "/boot/frc.json";
 	
-	private static Network kNetwork = new Network();
+	private static Network kNetwork;
 
   @SuppressWarnings("MemberName")
   public static class CameraConfig {
@@ -109,6 +109,7 @@ public final class Main {
 
 
   private Main() {
+		
 	}
 	
 /*	
@@ -534,7 +535,7 @@ public final class Main {
    */
   //public static void main(String... args) {
 	public static void main(String[] args) {
-
+		
 		System.out.println("Starting Vision Code");
 
     if (args.length > 0) {
@@ -548,7 +549,8 @@ public final class Main {
 
     // start NetworkTables
 		NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
-		
+		kNetwork = new Network(ntinst);
+
     if (server) {
       System.out.println("Setting up NetworkTables server");
       ntinst.startServer();

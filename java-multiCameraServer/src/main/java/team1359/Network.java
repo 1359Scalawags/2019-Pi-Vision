@@ -10,8 +10,8 @@ public class Network{
     double x;
     double distanceFromTarget;
     
-    public Network(){
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    public Network(NetworkTableInstance existing){
+        NetworkTableInstance inst = existing;
         NetworkTable xTable = inst.getTable("xTable");
         NetworkTable targetDistanceTable = inst.getTable("DistanceTable");
         xEntry = xTable.getEntry("x");
