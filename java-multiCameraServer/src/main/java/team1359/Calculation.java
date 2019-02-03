@@ -1,6 +1,7 @@
 package team1359;
 
 import team1359.Main.MyPipeline;
+import team1359.Network;
 import java.util.ArrayList;
 import org.opencv.core.*;
 import org.opencv.imgproc.*;
@@ -15,6 +16,7 @@ public class Calculation{
     float angleToTarget;
 
     MyPipeline pipeline;
+    Network knetwork;
 
     float distConvertion = 1280;
     int screenWidth = 640;
@@ -50,7 +52,7 @@ public class Calculation{
     }
 
     public float getAverageCenterx(){
-        return 1;
+        return averageCenterX;
     }
 
     public float getLargestArea(){
@@ -69,5 +71,9 @@ public class Calculation{
 
     public int getTargetNumber(){
         return 1;
+    }
+
+    public void updateTable(){
+        knetwork.setTable(averageCenterX, averageDist, angleToTarget);
     }
 }

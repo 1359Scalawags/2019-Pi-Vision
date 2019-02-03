@@ -574,7 +574,7 @@ public final class Main {
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new MyPipeline(), pipeline -> {
 				// do something with pipeline results
-				kNetwork.setTable();
+				//kNetwork.setTable();
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),

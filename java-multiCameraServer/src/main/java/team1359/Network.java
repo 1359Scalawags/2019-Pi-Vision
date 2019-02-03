@@ -33,7 +33,7 @@ public class Network{
         System.out.println("====================" + distanceValue);
     }
 
-    public void setTable(){
+    public void setTable(double xInput, double distanceInput, double angleInput){
         /*
         xEntry.setDouble(x);
         distance.setDouble(distanceFromTarget);
@@ -49,8 +49,8 @@ public class Network{
         }
         */
         // send X%, distance from target, angle from target
-        xEntry.setDouble(x);
-        distance.setDouble(distanceFromTarget);
-        angleToTarget.setDouble(tempAngleValue);
+        xEntry.setDouble(xInput);
+        distance.setDouble(distanceInput);
+        angleToTarget.setDouble(angleInput);
     }
 }
