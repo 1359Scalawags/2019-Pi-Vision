@@ -7,8 +7,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class Network{
     NetworkTableEntry xEntry;
     NetworkTableEntry distance;
+    NetworkTableEntry angleToTarget;
     double x;
     double distanceFromTarget;
+    double tempAngleValue;
     
     public Network(NetworkTableInstance existing){
         NetworkTableInstance inst = existing;
@@ -16,8 +18,12 @@ public class Network{
         NetworkTable targetDistanceTable = inst.getTable("DistanceTable");
         xEntry = xTable.getEntry("x");
         distance = targetDistanceTable.getEntry("distance");
+        angleToTarget = xTable.getEntry("TAngle");
         x = 0;
         distanceFromTarget = 20;
+
+        tempAngleValue = 0;
+
     }
 
     public void getTableValues(){
@@ -28,6 +34,7 @@ public class Network{
     }
 
     public void setTable(){
+        /*
         xEntry.setDouble(x);
         distance.setDouble(distanceFromTarget);
         if(x <= 1000){
@@ -40,5 +47,10 @@ public class Network{
         }else{
             distanceFromTarget = 0;
         }
+        */
+        // send X%, distance from target, angle from target
+        xEntry.setDouble(x);
+        distance.setDouble(distanceFromTarget);
+        angleToTarget.setDouble(tempAngleValue);
     }
 }

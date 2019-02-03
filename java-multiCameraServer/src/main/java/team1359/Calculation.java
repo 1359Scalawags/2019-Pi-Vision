@@ -43,6 +43,8 @@ public class Calculation{
         if(targetCount > 0){
             averageCenterX = sumCenterX / targetCount;
             angleToTarget = getAngleToTarget(averageCenterX, largestWidth);
+        }else{
+            angleToTarget = 0;
         };
 
     }
