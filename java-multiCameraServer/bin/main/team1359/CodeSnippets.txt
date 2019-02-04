@@ -1,0 +1,15 @@
+    
+    //example of breaking a big task into subtasks
+    public float getDistanceToTarget(ArrayList<MatOfPoint> allcontours) {
+        float large_area = getSizeOfReflector(last element of arraylist);
+        float small_area = getSizeOfReflector(first element of arraylist);
+        float avg_area = (large_area + small_area) / 2.0f;
+        // bunch of math to find actual distance
+        return 0;
+    }
+
+
+    //how to sort a collection using a comparator class
+    public void sortContours(ArrayList<MatOfPoint> unsorted) {
+        Collections.sort(unsorted, new ContourAreaComparator());
+    }
