@@ -36,6 +36,7 @@ public class Calculation{
 
     }
 
+<<<<<<< Updated upstream
     public ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
         ArrayList<RotatedRect> tempContours = new ArrayList<RotatedRect>();
         for (MatOfPoint m : input) {
@@ -43,6 +44,20 @@ public class Calculation{
             tempContours.add(Imgproc.minAreaRect(cont));
         }
         return tempContours;
+=======
+    public int getCenterOfTarget(ArrayList<RotatedRect> contours){
+        int correctIndex = -1;
+        for(int i = 0; i < (contours.size() - 1); i++){
+            if(contours.get(i).angle > 0 && contours.get(i+1).angle < 0){
+                correctIndex = i;
+            }
+        }
+        return 0;
+    }
+
+    public float getAverageCenterx(){
+        return averageCenterX;
+>>>>>>> Stashed changes
     }
 
 
