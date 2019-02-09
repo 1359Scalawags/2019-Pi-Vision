@@ -42,6 +42,7 @@ public class Calculation{
             MatOfPoint2f cont = new MatOfPoint2f(m);
             tempContours.add(Imgproc.minAreaRect(cont));
         }
+
         return tempContours;
     }
 
