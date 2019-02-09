@@ -33,6 +33,7 @@ public class Calculation{
     public void processContours(ArrayList<MatOfPoint> contours){
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
+        //getCenterOfTarget(RotRectContours);
 
     }
 
@@ -59,10 +60,17 @@ public class Calculation{
                 correctIndex = i;
             }
         }
-        // what do we return if correctIndex is not present
-        return (contours.get(correctIndex+1).boundingRect().x + contours.get(correctIndex).boundingRect().x)/2;
+        if(correctIndex > -1){
+            return (int)((contours.get(correctIndex+1).center.x + contours.get(correctIndex).center.x)/2);
+        }
+        else{
+            return -1;
+        }
     }
 
+    public double changeCenterToPercentage(){
+        return 4;
+    }
 
     public float getDistanceToHatch(){
 
@@ -77,9 +85,9 @@ public class Calculation{
         return 0; //angle hatch is at from perpendicular
     }
 
-    public float getCenterOfHatch(){
-        return 0; //precentage center of hatch is off from center screen
-    }
+    // public float getCenterOfHatch(){
+    //     return 0; //precentage center of hatch is off from center screen
+    // }
 
     // public void VisionTargets(){
     //     float sumCenterX = 0;

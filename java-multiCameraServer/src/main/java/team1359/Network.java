@@ -8,7 +8,7 @@ public class Network{
     NetworkTableEntry xEntry;
     NetworkTableEntry distance;
     NetworkTableEntry angleToTarget;
-    double x;
+    public double x;
     double distanceFromTarget;
     double tempAngleValue;
     
@@ -19,10 +19,10 @@ public class Network{
         xEntry = xTable.getEntry("x");
         distance = targetDistanceTable.getEntry("distance");
         angleToTarget = xTable.getEntry("TAngle");
-        x = 0;
-        distanceFromTarget = 20;
+        //x = 0;
+        //distanceFromTarget = 20;
 
-        tempAngleValue = 0;
+        //tempAngleValue = 0;
 
     }
 
