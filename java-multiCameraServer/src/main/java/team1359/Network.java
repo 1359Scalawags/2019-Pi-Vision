@@ -8,22 +8,28 @@ public class Network{
     NetworkTableEntry xEntry;
     NetworkTableEntry distance;
     NetworkTableEntry angleToTarget;
+    NetworkTableEntry frameSize;
     double x;
     double distanceFromTarget;
     double tempAngleValue;
+
+    Calculation kCalculation;
     
     public Network(NetworkTableInstance existing){
         NetworkTableInstance inst = existing;
         NetworkTable xTable = inst.getTable("xTable");
         NetworkTable targetDistanceTable = inst.getTable("DistanceTable");
+        NetworkTable sizeOfFrame = inst.getTable("sizeOfFrame");
         xEntry = xTable.getEntry("x");
         distance = targetDistanceTable.getEntry("distance");
+        frameSize = sizeOfFrame.getEntry("frame");
         angleToTarget = xTable.getEntry("TAngle");
         x = 0;
         distanceFromTarget = 20;
 
         tempAngleValue = 0;
-
+        Number[] frameDimentions = new Number[] {Calculation.getFrameWidth(), Calculation.getFrameHight()}; // {x, y}
+        frameSize.setNumberArray(frameDimentions);
     }
 
     public void getTableValues(){

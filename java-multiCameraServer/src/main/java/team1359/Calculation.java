@@ -22,6 +22,9 @@ public class Calculation{
     MyPipeline pipeline;
     Network knetwork;
 
+    static int frameWidth = 0;
+    static int frameHeight = 0;
+
     // float distConvertion = 1280;
     // int screenWidth = 640;
     // int screenCenter = 320;
@@ -31,6 +34,11 @@ public class Calculation{
     }
 
     public void processContours(ArrayList<MatOfPoint> contours){
+        if(contours.size() > 0){
+            frameWidth = (int)contours.get(0).size().width;
+            frameHeight = (int)contours.get(0).size().height;
+        }
+        
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
 
@@ -63,6 +71,13 @@ public class Calculation{
         return (contours.get(correctIndex+1).boundingRect().x + contours.get(correctIndex).boundingRect().x)/2;
     }
 
+    public static int getFrameWidth(){
+        return frameWidth;
+    }
+
+    public static int getFrameHight(){
+        return frameHeight;
+    }
 
     public float getDistanceToHatch(){
 
