@@ -52,7 +52,16 @@ public class Calculation{
         return 1;
     }
 
-
+    public int getCenterOfTarget(ArrayList<RotatedRect> contours){
+        int correctIndex = -1;
+        for(int i = 0; i < (contours.size() - 1); i++){
+            if(contours.get(i).angle > 0 && contours.get(i+1).angle < 0){
+                correctIndex = i;
+            }
+        }
+        // what do we return if correctIndex is not present
+        return (contours.get(correctIndex+1).boundingRect().x + contours.get(correctIndex).boundingRect().x)/2;
+    }
 
 
     public float getDistanceToHatch(){
