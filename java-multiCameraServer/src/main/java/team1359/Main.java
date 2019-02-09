@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cscore.MjpegServer;
+import team1359.Calculation;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -92,6 +93,7 @@ public final class Main {
 	private static String configFile = "/boot/frc.json";
 	
 	private static Network kNetwork;
+	private static Calculation kCalculation;
 
   @SuppressWarnings("MemberName")
   public static class CameraConfig {
@@ -104,13 +106,13 @@ public final class Main {
   public static int team;
   public static boolean server;
 	public static List<CameraConfig> cameraConfigs = new ArrayList<>();
+	public static ArrayList<MatOfPoint> arrayTest;
 	
 	//==========================================================================================================================
 	//NetworkTableEntry piTest;
 
 
   private Main() {
-		
 	}
 	
 /*	
@@ -574,7 +576,9 @@ public final class Main {
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new MyPipeline(), pipeline -> {
 				// do something with pipeline results
-				//kNetwork.setTable();
+			//	arrayTest = filterContoursOutput();
+				kCalculation.processContours(arrayTest);
+				kNetwork.setTable(kCalculation.getXValue(), 0, 0);
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),

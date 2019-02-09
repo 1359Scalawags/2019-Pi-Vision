@@ -24,6 +24,7 @@ public class Calculation{
 
     static int frameWidth = 0;
     static int frameHeight = 0;
+    private double xTemp;
 
     // float distConvertion = 1280;
     // int screenWidth = 640;
@@ -42,7 +43,7 @@ public class Calculation{
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
         //getCenterOfTarget(RotRectContours);
-
+        xTemp = (double)((getCenterOfTarget(RotRectContours)/getFrameWidth())*100); // setting it to a precentage
     }
 
     public ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
@@ -55,9 +56,12 @@ public class Calculation{
         return tempContours;
     }
 
+    public double getXValue(){
+        return xTemp;
+    }
+
 
     public float findTargetAngle(){
-
         return 1;
     }
 
@@ -76,9 +80,9 @@ public class Calculation{
         }
     }
 
-    public double changeCenterToPercentage(){
-        return 4;
-    }
+    // public double getPercentageToTarget(){
+    //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
+    // }
 
     public static int getFrameWidth(){
         return frameWidth;
