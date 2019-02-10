@@ -25,6 +25,12 @@ public class Calculation{
     static int frameWidth = 0;
     static int frameHeight = 0;
     private double xTemp;
+    private double areaOfTarget;
+    private int centerOfTarget = -1;
+    private double ratio;
+    private boolean initialArea = true;
+    double farthestDistanceFromTarget = 5; // how far the camera can be from the target
+    double initialAreaOfTarget;
 
     // float distConvertion = 1280;
     // int screenWidth = 640;
@@ -42,8 +48,9 @@ public class Calculation{
         
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
+        findTarget(RotRectContours);
         //getCenterOfTarget(RotRectContours);
-        xTemp = (double)((getCenterOfTarget(RotRectContours)/getFrameWidth())*100); // setting it to a precentage
+        xTemp = (double)((getCenterOfTarget()/getFrameWidth())*100); // setting it to a percentage
     }
 
     public ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
@@ -60,12 +67,22 @@ public class Calculation{
         return xTemp;
     }
 
-
-    public float findTargetAngle(){
+    public float findTargetAngle(ArrayList<RotatedRect> contours){
+       // Collections.sort(contours,new ContourAreaComparator());
         return 1;
     }
 
-    public int getCenterOfTarget(ArrayList<RotatedRect> contours){
+    public double getDistanceFromTarget(){
+        ratio = initialAreaOfTarget/farthestDistanceFromTarget; // calculation to find ratio. can be hard coded
+        
+        return areaOfTarget*(areaOfTarget/ratio);
+    }
+
+    public int getCenterOfTarget(){
+       return centerOfTarget;
+    }
+
+    public void findTarget(ArrayList<RotatedRect> contours){
         int correctIndex = -1;
         for(int i = 0; i < (contours.size() - 1); i++){
             if(contours.get(i).angle > 0 && contours.get(i+1).angle < 0){
@@ -73,10 +90,14 @@ public class Calculation{
             }
         }
         if(correctIndex > -1){
-            return (int)((contours.get(correctIndex+1).center.x + contours.get(correctIndex).center.x)/2);
+            if(initialArea){
+                initialAreaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
+                initialArea = false;
+            }
+            areaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
+            centerOfTarget = (int)((contours.get(correctIndex+1).center.x + contours.get(correctIndex).center.x)/2);
         }
         else{
-            return -1;
         }
     }
 
