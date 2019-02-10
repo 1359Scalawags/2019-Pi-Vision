@@ -1,10 +1,6 @@
 package team1359;
 
-import team1359.Main.MyPipeline;
-import team1359.Network;
-import java.util.ArrayList;
 import org.opencv.core.*;
-import org.opencv.imgproc.*;
 import java.util.Comparator;
 
 public class ContourAreaComparator implements Comparator<RotatedRect> {
