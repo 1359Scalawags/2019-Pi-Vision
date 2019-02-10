@@ -12,13 +12,6 @@ public class Calculation{
 
     public static final float ReflectorAreaAtOneFoot = 100;
 
-    // float averageCenterX;
-    // float largestArea;
-    // float largestWidth;
-    // int targetCount;
-    // float averageDist;
-    // float angleToTarget;
-
     MyPipeline pipeline;
     Network knetwork;
 
@@ -30,15 +23,25 @@ public class Calculation{
     // int screenWidth = 640;
     // int screenCenter = 320;
 
+    // float averageCenterX;
+    // float largestArea;
+    // float largestWidth;
+    // int targetCount;
+    // float averageDist;
+    // float angleToTarget;
+
     public Calculation(){
 
     }
 
     public void processContours(ArrayList<MatOfPoint> contours){
-        if(contours.size() > 0){
-            frameWidth = (int)contours.get(0).size().width;
-            frameHeight = (int)contours.get(0).size().height;
+        if(contours != null){
+            if(contours.size() > 0){
+                frameWidth = (int)contours.get(0).size().width;
+                frameHeight = (int)contours.get(0).size().height;
+            }
         }
+        
         
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
@@ -46,7 +49,7 @@ public class Calculation{
         xTemp = (double)((getCenterOfTarget(RotRectContours)/getFrameWidth())*100); // setting it to a precentage
     }
 
-    public ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
+    private ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
         ArrayList<RotatedRect> tempContours = new ArrayList<RotatedRect>();
         for (MatOfPoint m : input) {
             MatOfPoint2f cont = new MatOfPoint2f(m);
@@ -56,16 +59,7 @@ public class Calculation{
         return tempContours;
     }
 
-    public double getXValue(){
-        return xTemp;
-    }
-
-
-    public float findTargetAngle(){
-        return 1;
-    }
-
-    public int getCenterOfTarget(ArrayList<RotatedRect> contours){
+    private int getCenterOfTarget(ArrayList<RotatedRect> contours){
         int correctIndex = -1;
         for(int i = 0; i < (contours.size() - 1); i++){
             if(contours.get(i).angle > 0 && contours.get(i+1).angle < 0){
@@ -80,9 +74,9 @@ public class Calculation{
         }
     }
 
-    // public double getPercentageToTarget(){
-    //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
-    // }
+    public double getXValue(){
+        return xTemp;
+    }
 
     public static int getFrameWidth(){
         return frameWidth;
@@ -90,6 +84,10 @@ public class Calculation{
 
     public static int getFrameHight(){
         return frameHeight;
+    }
+
+    public float findTargetAngle(){
+        return 1;
     }
 
     public float getDistanceToHatch(){
@@ -104,6 +102,10 @@ public class Calculation{
     public float getAngleFromHatch(){
         return 0; //angle hatch is at from perpendicular
     }
+
+    // public double getPercentageToTarget(){
+    //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
+    // }
 
     // public float getCenterOfHatch(){
     //     return 0; //precentage center of hatch is off from center screen
