@@ -66,9 +66,6 @@ public class Calculation{
         return tempContours;
     }
 
-    public double getXValue(){
-        return xTemp;
-    }
 
     public float findTargetAngle(ArrayList<RotatedRect> contours){
        // Collections.sort(contours,new ContourAreaComparator());
