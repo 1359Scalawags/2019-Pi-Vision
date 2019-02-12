@@ -10,12 +10,14 @@ import org.opencv.imgproc.*;
 
 public class Calculation{
 
+
     // float averageCenterX;
     // float largestArea;
     // float largestWidth;
     // int targetCount;
     // float averageDist;
     // float angleToTarget;
+    public static final float ReflectorAreaAtOneFoot = 100;
 
     MyPipeline pipeline;
     Network knetwork;
@@ -37,15 +39,25 @@ public class Calculation{
     // int screenWidth = 640;
     // int screenCenter = 320;
 
+    // float averageCenterX;
+    // float largestArea;
+    // float largestWidth;
+    // int targetCount;
+    // float averageDist;
+    // float angleToTarget;
+
     public Calculation(){
 
     }
 
     public void processContours(ArrayList<MatOfPoint> contours){
-        if(contours.size() > 0){
-            frameWidth = (int)contours.get(0).size().width;
-            frameHeight = (int)contours.get(0).size().height;
+        if(contours != null){
+            if(contours.size() > 0){
+                frameWidth = (int)contours.get(0).size().width;
+                frameHeight = (int)contours.get(0).size().height;
+            }
         }
+        
         
         ArrayList<RotatedRect> RotRectContours = getMinBoundingRects(contours);
         Collections.sort(RotRectContours, new ContourPosComparator());
@@ -54,7 +66,7 @@ public class Calculation{
         xTemp = (double)((getCenterOfTarget()/getFrameWidth())*100); // setting it to a percentage
     }
 
-    public ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
+    private ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
         ArrayList<RotatedRect> tempContours = new ArrayList<RotatedRect>();
         for (MatOfPoint m : input) {
             MatOfPoint2f cont = new MatOfPoint2f(m);
@@ -64,9 +76,6 @@ public class Calculation{
         return tempContours;
     }
 
-    public double getXValue(){
-        return xTemp;
-    }
 
     public double getAngleFromTarget(){ // doesnt need to be double. dont know how to work around networkTable
         angleRatio = (leftContourLength/rightContourLength)*getDistanceFromTarget();
@@ -118,9 +127,9 @@ public class Calculation{
         }
     }
 
-    // public double getPercentageToTarget(){
-    //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
-    // }
+    public double getXValue(){
+        return xTemp;
+    }
 
     public static int getFrameWidth(){
         return frameWidth;
@@ -130,17 +139,16 @@ public class Calculation{
         return frameHeight;
     }
 
-    // public float getDistanceToHatch(){
-
-    //     return 0; //distance to hatch from robot
-    // }
-
     public MatOfPoint[] getSortedContours(MatOfPoint[] unsorted){
         return null;
     }
 
     // public float getAngleFromHatch(){
     //     return 0; //angle hatch is at from perpendicular
+    // }
+
+    // public double getPercentageToTarget(){
+    //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
     // }
 
     // public float getCenterOfHatch(){
