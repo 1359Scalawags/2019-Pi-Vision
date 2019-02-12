@@ -577,7 +577,7 @@ public final class Main {
               new MyPipeline(), pipeline -> {
 				// do something with pipeline results
 				kCalculation.processContours(pipeline.filterContoursOutput());
-				kNetwork.setTable(kCalculation.getXValue(), 0, 0);
+				kNetwork.setTable(kCalculation.getXValue(), kCalculation.getDistanceFromTarget(), kCalculation.getAngleFromTarget());
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),

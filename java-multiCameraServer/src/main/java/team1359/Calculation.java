@@ -10,8 +10,6 @@ import org.opencv.imgproc.*;
 
 public class Calculation{
 
-    public static final float ReflectorAreaAtOneFoot = 100;
-
     // float averageCenterX;
     // float largestArea;
     // float largestWidth;
@@ -27,10 +25,13 @@ public class Calculation{
     private double xTemp;
     private double areaOfTarget;
     private int centerOfTarget = -1;
-    private double ratio;
-    private boolean initialArea = true;
-    double farthestDistanceFromTarget = 5; // how far the camera can be from the target
-    double initialAreaOfTarget;
+    private double leftContourLength;
+    private double rightContourLength;
+    private double angleRatio;
+   // private boolean initialArea = true;
+    private final double areaFromMaxDistance = 5; // change
+    private float withinAngleToTarget = .9f; // change
+    //double initialAreaOfTarget;
 
     // float distConvertion = 1280;
     // int screenWidth = 640;
@@ -67,15 +68,29 @@ public class Calculation{
         return xTemp;
     }
 
-    public float findTargetAngle(ArrayList<RotatedRect> contours){
-       // Collections.sort(contours,new ContourAreaComparator());
-        return 1;
+    public double getAngleFromTarget(){ // doesnt need to be double. dont know how to work around networkTable
+        angleRatio = (leftContourLength/rightContourLength)*getDistanceFromTarget();
+        if(angleRatio <= .5){ // big angle to the left
+            return -2;
+        }
+        else if(angleRatio > .5 && angleRatio < .9){ //small angle to the left
+            return -1;
+        }
+        else if(angleRatio >= 2){ // big angle to the right
+            return 2;
+
+        }
+        else if(angleRatio < 2 && angleRatio > 1.1){ // small angle to the right
+            return 1;
+        }
+        else{ // within angleToTarget
+            return 0;
+        }
     }
 
     public double getDistanceFromTarget(){
-        ratio = initialAreaOfTarget/farthestDistanceFromTarget; // calculation to find ratio. can be hard coded
-        
-        return areaOfTarget*(areaOfTarget/ratio);
+       // ratio = initialAreaOfTarget/constant; // calculation to find ratio. can be hard coded
+        return Math.sqrt(areaFromMaxDistance/areaOfTarget);
     }
 
     public int getCenterOfTarget(){
@@ -90,10 +105,12 @@ public class Calculation{
             }
         }
         if(correctIndex > -1){
-            if(initialArea){
-                initialAreaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
-                initialArea = false;
-            }
+            // if(initialArea){
+            //     initialAreaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
+            //     initialArea = false;
+            // }
+            leftContourLength = Math.sqrt(contours.get(correctIndex).size.area());
+            rightContourLength = Math.sqrt(contours.get(correctIndex+1).size.area());
             areaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
             centerOfTarget = (int)((contours.get(correctIndex+1).center.x + contours.get(correctIndex).center.x)/2);
         }
@@ -113,18 +130,18 @@ public class Calculation{
         return frameHeight;
     }
 
-    public float getDistanceToHatch(){
+    // public float getDistanceToHatch(){
 
-        return 0; //distance to hatch from robot
-    }
+    //     return 0; //distance to hatch from robot
+    // }
 
     public MatOfPoint[] getSortedContours(MatOfPoint[] unsorted){
         return null;
     }
 
-    public float getAngleFromHatch(){
-        return 0; //angle hatch is at from perpendicular
-    }
+    // public float getAngleFromHatch(){
+    //     return 0; //angle hatch is at from perpendicular
+    // }
 
     // public float getCenterOfHatch(){
     //     return 0; //precentage center of hatch is off from center screen
