@@ -66,22 +66,6 @@ public class Calculation{
         return tempContours;
     }
 
-
-    public float findTargetAngle(ArrayList<RotatedRect> contours){
-       // Collections.sort(contours,new ContourAreaComparator());
-        return 1;
-    }
-
-    public double getDistanceFromTarget(){
-        ratio = initialAreaOfTarget/farthestDistanceFromTarget; // calculation to find ratio. can be hard coded
-        
-        return areaOfTarget*(areaOfTarget/ratio);
-    }
-
-    public int getCenterOfTarget(){
-       return centerOfTarget;
-    }
-
     public void findTarget(ArrayList<RotatedRect> contours){
         int correctIndex = -1;
         for(int i = 0; i < (contours.size() - 1); i++){
@@ -99,6 +83,12 @@ public class Calculation{
         }
         else{
         }
+    }
+    
+    public double getDistanceFromTarget(){
+        ratio = initialAreaOfTarget/farthestDistanceFromTarget; // calculation to find ratio. can be hard coded
+        
+        return areaOfTarget*(areaOfTarget/ratio);
     }
 
     public double getXValue(){
@@ -130,6 +120,14 @@ public class Calculation{
         return 0; //angle hatch is at from perpendicular
     }
 
+    public float findTargetAngle(ArrayList<RotatedRect> contours){
+        // Collections.sort(contours,new ContourAreaComparator());
+         return 1;
+    }
+
+    public int getCenterOfTarget(){
+        return centerOfTarget;
+    }
     // public double getPercentageToTarget(){
     //     return (double)(getCenterOfTarget(RotRectContours)/getFrameWidth());
     // }
