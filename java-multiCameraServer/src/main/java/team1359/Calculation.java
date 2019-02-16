@@ -96,6 +96,7 @@ public class Calculation{
         // else{ // within angleToTarget
         //     return 0;
         // }
+        //
         return (lengthOfTarget-1)/(angleToTargetRatio*(1/(getDistanceFromTarget())));
     }
 
