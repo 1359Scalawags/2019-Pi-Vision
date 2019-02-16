@@ -27,12 +27,14 @@ public class Calculation{
     private double xTemp;
     private double areaOfTarget;
     private int centerOfTarget = -1;
-    private double leftContourLength;
-    private double rightContourLength;
-    private double angleRatio;
+   // private double leftContourLength;
+    //private double rightContourLength;
+   // private double angleRatio;
+    private double lengthOfTarget;
+    private double angleToTargetRatio = 8.0/45.0;
    // private boolean initialArea = true;
     private final double areaFromMaxDistance = 5; // change
-    private float withinAngleToTarget = .9f; // change
+   // private float withinAngleToTarget = .9f; // change
     //double initialAreaOfTarget;
 
     // float distConvertion = 1280;
@@ -78,23 +80,23 @@ public class Calculation{
 
 
     public double getAngleFromTarget(){ // doesnt need to be double. dont know how to work around networkTable
-        angleRatio = (leftContourLength/rightContourLength)*getDistanceFromTarget();
-        if(angleRatio <= .5){ // big angle to the left
-            return -2;
-        }
-        else if(angleRatio > .5 && angleRatio < .9){ //small angle to the left
-            return -1;
-        }
-        else if(angleRatio >= 2){ // big angle to the right
-            return 2;
-
-        }
-        else if(angleRatio < 2 && angleRatio > 1.1){ // small angle to the right
-            return 1;
-        }
-        else{ // within angleToTarget
-            return 0;
-        }
+        // angleRatio = (leftContourLength/rightContourLength)*getDistanceFromTarget();
+        // if(angleRatio <= .5){ // big angle to the left
+        //     return -2;
+        // }
+        // else if(angleRatio > .5 && angleRatio < .9){ //small angle to the left
+        //     return -1;
+        // }
+        // else if(angleRatio >= 2){ // big angle to the right
+        //     return 2;
+        // }
+        // else if(angleRatio < 2 && angleRatio > 1.1){ // small angle to the right
+        //     return 1;
+        // }
+        // else{ // within angleToTarget
+        //     return 0;
+        // }
+        return (lengthOfTarget-1)/(angleToTargetRatio*(1/(getDistanceFromTarget())));
     }
 
     public double getDistanceFromTarget(){
@@ -118,9 +120,10 @@ public class Calculation{
             //     initialAreaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
             //     initialArea = false;
             // }
-            leftContourLength = Math.sqrt(contours.get(correctIndex).size.area());
-            rightContourLength = Math.sqrt(contours.get(correctIndex+1).size.area());
-            areaOfTarget = (contours.get(correctIndex).size.area() + contours.get(correctIndex+1).size.area())/2;
+           //leftContourLength = Math.sqrt(contours.get(correctIndex).size.area());
+            //rightContourLength = Math.sqrt(contours.get(correctIndex+1).size.area());
+            lengthOfTarget = (contours.get(correctIndex).size.width + contours.get(correctIndex + 1).size.width)/2;
+            areaOfTarget = ((contours.get(correctIndex).size.area()) +(contours.get(correctIndex+1).size.area()))/2;
             centerOfTarget = (int)((contours.get(correctIndex+1).center.x + contours.get(correctIndex).center.x)/2);
         }
         else{
