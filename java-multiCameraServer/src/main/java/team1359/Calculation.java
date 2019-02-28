@@ -54,7 +54,13 @@ public class Calculation{
         Collections.sort(RotRectContours, new ContourPosComparator());
         findTarget(RotRectContours);
         //getCenterOfTarget(RotRectContours);
-        xTemp = (double)((getCenterOfTarget()/getFrameWidth())*100); // setting it to a percentage
+        //xTemp = (double)(getCenterOfTarget()/(getFrameWidth()/2)*100); // setting it to a percentage
+
+        if(getCenterOfTarget() < (getFrameWidth())/2){ //check to see if the taget is too far left
+            xTemp = -1;
+        }else{
+            xTemp = (double)(getCenterOfTarget()/(getFrameWidth()/2)*100);
+        }
     }
 
     private ArrayList<RotatedRect> getMinBoundingRects(ArrayList<MatOfPoint> input){
